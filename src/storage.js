@@ -61,7 +61,7 @@ let fetch = () => (
  */
 let get = (el, name) => {
   if (!name) name = 'colorpicker'
-  return (storage[name][el] !== null || storage[name][el] !== undefined) ? storage[name][el] : {}
+  return (storage !== undefined || storage[name][el] !== null || storage[name][el] !== undefined) ? storage[name][el] : {}
 }
 
 /**

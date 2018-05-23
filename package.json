@@ -28,6 +28,7 @@
   ],
   "dependencies": {
     "electron-json-storage": "^4.1.0",
+    "iohook": "^0.1.16",
     "request": "^2.85.0",
     "robotjs": "git+https://github.com/toinane/robotjs.git",
     "sortablejs": "^1.7.0",
@@ -49,5 +50,20 @@
   },
   "bugs": "https://github.com/toinane/colorpicker/issues",
   "homepage": "https://crea-th.at/p/colorpicker",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "iohook": {
+    "targets": [
+      "node-59",
+      "electron-57"
+    ],
+    "platforms": [
+      "win32",
+      "darwin",
+      "linux"
+    ],
+    "arches": [
+      "x64",
+      "ia32"
+    ]
+  }
 }
