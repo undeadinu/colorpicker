@@ -4,7 +4,7 @@ const ioHook = require('iohook')
 const {ipcMain} = require('electron')
 const robot = require('robotjs')
 
-let size, mouse, mouseEvent, color;
+let color;
 
 module.exports = (storage, browsers) => {
   const {picker, colorpicker} = browsers
@@ -22,31 +22,25 @@ module.exports = (storage, browsers) => {
   })
 
   ioHook.on('mouseup', event => {
-    console.log(event)
     if(!picker.getWindow()) return
     if(event.button == 2) return closePicker();
     let {x, y} = event;
-    console.log(x, y)
-    console.log(robot.getPixelColor(parseInt(x), parseInt(y)))
     closePicker('#' + robot.getPixelColor(parseInt(x), parseInt(y)))
   })
 
   let closePicker = newColor => {
     if (typeof newColor !== 'string') newColor = color
     if (picker.getWindow()) {
-      picker.getWindow().close()
       colorpicker.getWindow().webContents.send('changeColor', newColor)
       colorpicker.getWindow().focus()
       ipcMain.removeListener('closePicker', closePicker)
       ipcMain.removeListener('pickerRequested', event => {})
+      picker.getWindow().close()
     }
   }
 
   ipcMain.on('pickerRequested', event => {
-    let realtime = storage.get('realtime', 'picker')
-
     color = storage.get('lastColor')
-    picker.getWindow().on('close', () => mouseEvent.destroy())
 
     let pos = robot.getMousePos()
     picker.getWindow().setPosition(parseInt(pos.x) - 50, parseInt(pos.y) - 50)
